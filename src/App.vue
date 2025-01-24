@@ -25,5 +25,6 @@ import Mian from './components/Main.vue'
 }
 .el-header {
   padding: 0;
+  height: 73px;
 }
 </style>

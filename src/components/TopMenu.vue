@@ -9,11 +9,11 @@
       active-text-color="#ffd04b"
       @select="handleSelect"
   >
-    <el-menu-item index="1">Home</el-menu-item>
-    <el-menu-item index="2">Awards</el-menu-item>
-    <el-menu-item index="3">Member</el-menu-item>
-    <el-menu-item index="4">Events</el-menu-item>
-    <el-sub-menu index="5">
+    <el-menu-item index="1" class="items">Home</el-menu-item>
+    <el-menu-item index="2" class="items">Awards</el-menu-item>
+    <el-menu-item index="3" class="items">Member</el-menu-item>
+    <el-menu-item index="4" class="items">Events</el-menu-item>
+    <el-sub-menu index="5" class="items">
       <template #title>About us</template>
       <el-menu-item index="5-1">
         <a :href="urls.qq" target="_blank">QQ</a>
@@ -54,9 +54,13 @@ const handleSelect = (key: string, keyPath: string[]) => {
   font-size: 16px;
 }
 .el-menu{
-  width: 88vw;
+  width: 90vw;
+  height: 100%;
 }
 .el-menu--horizontal > .el-menu-item:nth-child(4) {
   margin-right: auto;
+}
+.items{
+  width: 20vw;
 }
 </style>

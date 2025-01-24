@@ -58,7 +58,7 @@ const handleSelect = (index: string) => {
 
 <style scoped>
 .el-button {
-  margin: 10px;
+  margin:0;
 }
 
 .el-drawer {

@@ -12,11 +12,11 @@ const url = new URL('../assets/images/icon/icon.png', import.meta.url).href;
   <div class="horizontal-layout">
     <!-- 图标部分 -->
     <div class="icon-container" v-for="fit in fits" :key="fit">
-      <el-image :src="url" :fit="fit" style="width: 10vw;"></el-image>
+      <el-image :src="url" :fit="fit" style="width: 10vw; max-height: 73px"></el-image>
     </div>
     <!-- 顶部菜单部分 -->
     <div class="top-menu-container">
-      <el-container>
+      <el-container style="height: 73px">
         <TopMenu />
       </el-container>
     </div>
@@ -39,5 +39,7 @@ const url = new URL('../assets/images/icon/icon.png', import.meta.url).href;
   /* 如果需要，可以为顶部菜单容器添加更多样式 */
   flex-shrink: 0; /* 确保菜单不会缩小 */
   width: 90vw;
+  height: 73px;
+  max-height: 73px;
 }
 </style>
