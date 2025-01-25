@@ -34,7 +34,10 @@ const BannerImg = [
   background-color: #d3dce6;
 }
 .banner-image{
-  width:100%;
+  width:404px;
   height: 100%;
+}
+.el-carousel{
+  width:804px;
 }
 </style>
