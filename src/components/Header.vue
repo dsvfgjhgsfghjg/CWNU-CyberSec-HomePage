@@ -1,45 +1,80 @@
-<script setup lang="ts">
-import type { ImageProps } from 'element-plus'
-import TopMenu from "./TopMenu.vue";
-
-const fits = [
-  'contain',
-] as ImageProps['fit'][];
-const url = new URL('../assets/images/icon/icon.png', import.meta.url).href;
-</script>
-
 <template>
-  <div class="horizontal-layout">
-    <!-- 图标部分 -->
-    <div class="icon-container" v-for="fit in fits" :key="fit">
-      <el-image :src="url" :fit="fit" style="width: 10vw; max-height: 73px"></el-image>
-    </div>
-    <!-- 顶部菜单部分 -->
-    <div class="top-menu-container">
-      <el-container style="height: 73px">
-        <TopMenu />
-      </el-container>
-    </div>
-  </div>
+  <header
+      class="header-container"
+      :class="{ 'header-shrink': isScrolled }"
+  >
+    <!-- 会标部分 -->
+    <img
+        src="@/assets/images/icon/icon.png"
+        alt="协会会标"
+        class="logo"
+        :class="{ 'logo-shrink': isScrolled }"
+    >
+
+    <!-- 导航菜单 -->
+    <TopMenu :is-scrolled="isScrolled" />
+  </header>
 </template>
 
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue'
+import TopMenu from './TopMenu.vue'
+
+const isScrolled = ref(false)
+const scrollThreshold = 100 // 滚动触发阈值
+
+// 节流函数优化性能
+const throttle = (fn: Function, delay: number) => {
+  let lastCall = 0
+  return (...args: any[]) => {
+    const now = Date.now()
+    if (now - lastCall >= delay) {
+      fn(...args)
+      lastCall = now
+    }
+  }
+}
+
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > scrollThreshold
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', throttle(handleScroll, 50))
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', throttle(handleScroll, 50))
+})
+</script>
+
 <style scoped>
-.horizontal-layout {
+.header-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 80px;
   display: flex;
-  justify-content: space-between; /* 或者使用 'flex-start', 'flex-end', 'center' 根据需要 */
   align-items: center;
-  padding: 0px; /* 可选，增加一些内边距 */
+  padding: 0 40px;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  z-index: 1000;
 }
 
-.icon-container {
-  /* 如果需要，可以为图标容器添加更多样式 */
+/* 缩小状态 */
+.header-shrink {
+  height: 60px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
-.top-menu-container {
-  /* 如果需要，可以为顶部菜单容器添加更多样式 */
-  flex-shrink: 0; /* 确保菜单不会缩小 */
-  width: 90vw;
-  height: 73px;
-  max-height: 73px;
+.logo {
+  height: 50px;
+  transition: transform 0.3s ease;
+}
+
+.logo-shrink {
+  transform: scale(0.85);
 }
 </style>

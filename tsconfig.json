@@ -3,5 +3,34 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "types": [
+      "node",                   // 新增：解决 Node.js 类型问题
+      "vite/client",
+      "@vitejs/plugin-vue"
+    ],
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "moduleResolution": "node", // 确保模块解析策略正确
+    "target": "esnext",
+    "strict": true,
+    "esModuleInterop": true,    // 新增：提升 CommonJS/ESM 互操作性
+    "skipLibCheck": true,       // 新增：跳过库类型检查（可选）
+    "allowSyntheticDefaultImports": true  // 支持默认导入
+  },
+  "include": [
+    "src/**/*.vue",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.json",            // 可选的 JSON 文件支持
+    "vite.config.ts"            // 确保 Vite 配置被识别
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",                     // 排除构建产物目录
+    "**/__tests__/*"            // 排除测试文件（可选）
   ]
 }
