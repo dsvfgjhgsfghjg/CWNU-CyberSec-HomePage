@@ -7,7 +7,7 @@
   >
     <el-menu-item index="/">Home</el-menu-item>
     <el-menu-item index="/awards">Awards</el-menu-item>
-    <el-menu-item index="/member">Member</el-menu-item>
+    <el-menu-item index="/members">Member</el-menu-item>
     <el-menu-item index="/events">Events</el-menu-item>
 
     <!-- 右侧功能保持右对齐 -->
