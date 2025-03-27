@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Awards from '@/Views/Awards.vue';
 import NotFound from '@/Views/NotFound.vue';
 import Members from "@/components/Members.vue";
+import Events from "@/components/Events.vue";
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -20,6 +21,11 @@ const router = createRouter({
             path: '/members',
             name: 'Members',
             component: Members
+        },// Events 页面路由
+        {
+            path: '/events',
+            name: 'Events',
+            component: Events
         },
         // 404 路由（必须放在最后）
         {
