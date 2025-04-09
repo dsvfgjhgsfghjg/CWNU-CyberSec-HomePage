@@ -3,13 +3,15 @@ import Awards from '@/Views/Awards.vue';
 import NotFound from '@/Views/NotFound.vue';
 import Members from "@/components/Members.vue";
 import Events from "@/components/Events.vue";
+import Main from "@/components/Main.vue";
 const router = createRouter({
     history: createWebHistory(),
     routes: [
         // 主视图路由（可留空或指向默认页）
         {
             path: '/',
-            component: () => import('@/components/Main.vue') // 你的主视图组件
+            component: Main,
+            name: 'Home',
         },
         // Awards 页面路由
         {

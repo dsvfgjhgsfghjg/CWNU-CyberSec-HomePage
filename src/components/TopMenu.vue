@@ -29,6 +29,13 @@ import { ref } from 'vue'
 
 const isJumping = ref(false)
 
+defineProps({
+  isScrolled: {
+    type: Boolean,
+    default: false
+  }
+})
+
 const playFufu = () => {
   isJumping.value = true
   setTimeout(() => {

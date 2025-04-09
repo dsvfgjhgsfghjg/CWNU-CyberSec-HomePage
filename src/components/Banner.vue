@@ -13,7 +13,7 @@ const BannerImg = [
     <el-carousel
         :interval="4000"
         type="card"
-        height="200px"
+        height="270px"
         class="centered-carousel"
     >
       <el-carousel-item v-for="item in BannerImg" :key="item.id">

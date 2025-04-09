@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 
-type BadgeType = 'founder' | 'pioneer' | 'techExpert' | 'keyContributor'
-
+type BadgeType = 'founder' | 'pioneer' | 'techExpert' | 'keyContributor' | 'teachers'
 interface Member {
   id: number
   nickname: string
   avatar: string
   title: string
-  role: 'founder' | 'president' | 'member'
+  role: 'founder' | 'president' | 'member' | 'teacher'
   badges?: BadgeType[]
 }
 
@@ -32,6 +31,11 @@ const badgesConfig = {
     text: '核心贡献',
     style: 'background: linear-gradient(45deg, #ffd700, #ffb400); color: #2c3e50;',
     icon: '🏆'
+  },
+  teachers: {
+    text: '指导老师',
+    style: 'background: #9b59b6; color: white;',
+    icon : '🎓',
   }
 }
 
@@ -67,17 +71,32 @@ const members = ref<Member[]>([
     title: '技术总监',
     role: 'member',
     badges: ['techExpert']
+  },
+  {
+    id: 5,
+    nickname: 'Jin Hongying',
+    avatar: new URL('@/assets/members/teacher_avatar.jpg', import.meta.url).href,
+    title: '指导老师',
+    role: 'teacher',
+    badges: ['teachers'],
   }
+
 ])
 
 const orderedMembers = computed(() => {
   return [...members.value].sort((a, b) => {
-    const roleOrder = { president: 0, founder: 1, member: 2 }
+    const roleOrder = {
+      president: 0,
+      teacher: 1,  // 教师排在创始人前
+      founder: 2,
+      member: 3
+    }
     const titleOrder = {
       '现任理事长': 0,
       '创始人': 1,
       '联合创始人': 2,
-      '技术总监': 3
+      '技术总监': 3,
+      '指导老师': 4
     }
 
     if (roleOrder[a.role] !== roleOrder[b.role]) {
@@ -119,7 +138,35 @@ const orderedMembers = computed(() => {
         </article>
       </div>
     </section>
-
+    <!-- 新增教师展示区 -->
+    <section class="teachers-section">
+      <h2 class="section-title">指导老师</h2>
+      <div class="teacher-grid">
+        <article
+            v-for="teacher in orderedMembers.filter(m => m.role === 'teacher')"
+            :key="teacher.id"
+            class="teacher-card"
+        >
+          <div class="avatar-wrapper teacher-avatar">
+            <img :src="teacher.avatar" :alt="teacher.nickname" class="avatar" />
+          </div>
+          <div class="member-info">
+            <h3 class="nickname">{{ teacher.nickname }}</h3>
+            <p class="title">{{ teacher.title }}</p>
+            <div class="badge-group" v-if="teacher.badges">
+              <div
+                  v-for="badge in teacher.badges"
+                  :key="badge"
+                  class="member-badge"
+                  :style="badgesConfig[badge].style"
+              >
+                {{ badgesConfig[badge].icon }} {{ badgesConfig[badge].text }}
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
     <!-- 创始人展示区 -->
     <section class="founders">
       <h2 class="section-title">创始团队</h2>
@@ -426,6 +473,48 @@ const orderedMembers = computed(() => {
 
   .title {
     font-size: 0.9rem;
+  }
+}
+
+.teachers-section {
+  margin: 4rem 0;
+}
+
+.teacher-grid {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.teacher-card {
+  background: linear-gradient(135deg, #f8f9fa, #ffffff);
+  border-radius: 18px;
+  padding: 2.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.teacher-avatar {
+  border-color: #e74c3c;
+  width: 180px !important;
+  height: 180px !important;
+  border-width: 4px;
+}
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .teacher-card {
+    padding: 1.5rem;
+  }
+
+  .teacher-avatar {
+    width: 140px !important;
+    height: 140px !important;
+  }
+}
+.teacher-card {
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
   }
 }
 </style>
